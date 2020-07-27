@@ -19,7 +19,6 @@ Western_diet_data <- read_excel("12W_western_silva_2018.xlsx")
 
 Western_diet_data_sig <- Western_diet_data %>%
   filter(FDR < 0.05)
-View(Western_diet_data_sig)
 
 western_enztrez= bitr(Western_diet_data_sig$Gene_Symbol, 
                     fromType = "SYMBOL", 
@@ -37,8 +36,13 @@ goResults_western <- enrichGO(gene = western_enztrez$ENTREZID,
                             universe = western_enztrez_bg$ENTREZID,
                             OrgDb = org.Mm.eg.db,
                             ont = "BP")
-dotplot(goResults_western)
 goResults_western <- setReadable(goResults_western, OrgDb = org.Mm.eg.db, keyType = "ENTREZID")
-cnetplot(goResults_western)
 ```
+
+
+```{r goResults_western1}
+cnetplot(goResults_western)
+dotplot(goResults_western)
+```
+
 
