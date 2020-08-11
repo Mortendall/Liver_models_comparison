@@ -13,7 +13,15 @@ library(org.Mm.eg.db)
 library(tidyverse)
 library(SummarizedExperiment)
 
+
 setwd("C:/Users/tvb217/Documents/R/Comparison of liver models/Bass 2020")
+
+redirectToFile <- function(y, file, fun, last = TRUE, ...)
+{
+  pdf(file, width = 4, height = 4) 
+  fun(y, ...) 
+  if(last) dev.off()
+}
 
 counts <- read.xlsx("Data_ZT8_Nampt_ko.xlsx")
 group <- read.xlsx("Metadata_ZT8_Nampt_KO.xlsx", colNames = T)
@@ -53,7 +61,7 @@ dgeResults_export <- topTags(dgeResults, n = Inf, p.value = 1) %>%
 
 dir.create("edgeR_results", showWarnings = FALSE)
 write.xlsx(dgeResults_export, file = "edgeR_results/Bass_WT_vs_KO.xlsx", asTable = TRUE)
-
+View(dgeResults_export)
 ####GO analysis####
 
 
@@ -89,4 +97,4 @@ cnetplot(goResults)
 
 
 
-
+?redirectToFile
